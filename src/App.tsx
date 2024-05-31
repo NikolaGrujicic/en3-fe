@@ -1,14 +1,18 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.scss";
-import Header from "./components/Header";
+import CreateEvent from "./pages/CreateEvent";
+import Events from "./pages/Events/index";
 
 function App() {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={"Home"} />
-        <Route path="/about" element={"About"} />
+        <Route path="/" element={"wkjnfwenfjwei"} />
+        <Route path="/about" element={"wojnwmedc"} />
+        <Route path="/create-event" element={<CreateEvent />} />
+        <Route path="/events" element={<Events />} />
+
       </Routes>
     </BrowserRouter>
   );
