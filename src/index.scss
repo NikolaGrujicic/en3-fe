@@ -16,3 +16,43 @@ body {
   width: 100%;
 }
 
+.header {
+  background-color: #1a202c; // Dark gray background color
+  color: #ffffff; // White text color
+  padding: 1rem; // Padding on all sides
+
+  .container {
+  align-items: center;
+
+    margin: 0 auto; // Center the content horizontally
+    display: flex;
+    justify-content: space-between; // Align items vertically centered and distribute space evenly
+
+    h1 {
+      font-size: 1.5rem; // Larger font size for heading
+      font-weight: bold; // Bold font weight for heading
+    }
+
+    nav {
+      ul {
+        list-style: none; // Remove default list styles
+        margin: 0;
+        padding: 0;
+
+        li {
+          display: inline-block; // Display list items horizontally
+          margin-right: 1rem; // Add spacing between list items
+
+          a {
+            color: #ffffff; // White text color for links
+            text-decoration: none; // Remove underline from links
+
+            &:hover {
+              color: #cbd5e0; // Light gray text color on hover
+            }
+          }
+        }
+      }
+    }
+  }
+}
