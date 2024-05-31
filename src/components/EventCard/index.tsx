@@ -3,6 +3,7 @@
 import React from 'react';
 import './style.scss';
 import { getDayOfWeek,formatDate } from '../../services/dateHelper';
+import { useNavigate } from 'react-router-dom';
 
 interface EventCardProps {
     title: string;
@@ -18,12 +19,12 @@ interface EventCardProps {
 const EventCard: React.FC<EventCardProps> = (EventCardProps) => {
     return (
         <div className="card-row">
+             <div className="timeline-dot"></div>
             <div className="card-date">
                 <p>{formatDate(EventCardProps.date)}</p>
                 <p>{getDayOfWeek(EventCardProps.date)}</p>
             </div>
-            <div className="card-data">
-            
+            <div className="card-data" onClick={() =>  window.open('/event/' + EventCardProps.eventId, '_blank')}>
                 <div className="event-info">
                     <p className="event-time">
                         {EventCardProps.time}

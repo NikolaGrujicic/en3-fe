@@ -2,7 +2,16 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
-   
+    position: relative;
+    .timeline-dot{
+        width: 9px;
+        border-radius: 20px;
+        height: 9px;
+        position: absolute;
+        left: 117px;
+        top: 7px;
+        background-color: white;
+    }
     .card-date{
         p:nth-of-type(1){
             font-size: 18px;
@@ -26,6 +35,9 @@
         display: flex;
         justify-content: space-between;
         padding: 10px;
+        &:hover{
+            cursor: pointer;
+        }
        .event-info{
            padding: 5px;
            .event-time{

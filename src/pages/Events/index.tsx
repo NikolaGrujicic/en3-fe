@@ -56,12 +56,16 @@ const Events: React.FC = () => {
         </div>
         <div className="events-data">
         <div className="card-timeline"></div>
-          {viewEvents && viewEvents.map((event,index) => 
+          {viewEvents &&  viewEvents.length > 0 ? (
+            viewEvents.map((event,index) => 
           <>
-          <div className="timeline-dot"></div>
           <EventCard {...event} eventId={index} />
           </>
-          )}
+          )):
+          <div className="no-event">
+            <p>No events found</p>
+          </div>
+          } 
       
         </div>
       </div>
