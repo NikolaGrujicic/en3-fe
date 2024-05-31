@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import Login from './Login'
 
 const Header: React.FC = () => {
     return (
@@ -17,8 +18,7 @@ const Header: React.FC = () => {
                     </div>
                 </nav>
                 <div className="header-login">
-                    Login
-                            {/* Insert component here ex. <Login/> */}
+                    <Login/>
 
                     </div>
             </div>
