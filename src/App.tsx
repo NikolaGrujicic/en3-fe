@@ -6,6 +6,7 @@ import Events from "./pages/Events/index";
 function App() {
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path="/" element={"wkjnfwenfjwei"} />
         <Route path="/about" element={"wojnwmedc"} />
