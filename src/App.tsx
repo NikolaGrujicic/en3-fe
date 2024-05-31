@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.scss";
-import CreateEvent from "./pages/CreateEvent";
+import CreateEvent from "./pages/CreateEvent/index";
 
 function App() {
   return (
