@@ -10,6 +10,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: #17295d;
+  font-family: "Ubuntu", sans-serif;
 }
 
 #root{
@@ -17,9 +18,9 @@ body {
 }
 
 .header {
-  background-color: #1a202c; // Dark gray background color
+  background-color: #17295d;; // Dark gray background color
   color: #ffffff; // White text color
-  padding: 1rem; // Padding on all sides
+  padding: 5px 0 20px 0; // Padding on all sides
 
   .container {
   align-items: center;
@@ -34,6 +35,9 @@ body {
     }
 
     nav {
+      width: 48%;
+      display: flex;
+      justify-content: start;
       ul {
         list-style: none; // Remove default list styles
         margin: 0;
@@ -44,11 +48,11 @@ body {
           margin-right: 1rem; // Add spacing between list items
 
           a {
-            color: #ffffff; // White text color for links
+            color: hsla(0,0%,100%,.79); // White text color for links
             text-decoration: none; // Remove underline from links
 
             &:hover {
-              color: #cbd5e0; // Light gray text color on hover
+              color: #ffffff; // Light gray text color on hover
             }
           }
         }
