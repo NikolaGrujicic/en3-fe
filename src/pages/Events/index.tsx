@@ -3,11 +3,11 @@ import EventCard from '../../components/EventCard/index';
 import './style.scss';
 import { eventsData } from '../../config/const';
 import { Event } from '../../interfaces';
-const Events: React.FC = () => {
 
 
-  const [eventTimePeriod, serEventTimePeriod] = React.useState('future');
+const Events: React.FC =  () => {
 
+const [eventTimePeriod, serEventTimePeriod] = React.useState('future');
 
   useEffect(() => {
     setViewEvents(filterEvents(eventTimePeriod));
@@ -18,10 +18,13 @@ const Events: React.FC = () => {
   const filterEvents = (eventType: string): Event[] => {
     const currentDate = new Date();
 
+    const sortedEvents = events.slice().sort((a, b) => new Date(a.start_date) - new Date(b.start_date));
+
+    // Filter events based on event type
     if (eventType === 'past') {
-      return events.filter(event => new Date(event.date) < currentDate);
+      return sortedEvents.filter(event => new Date(event.start_date) < currentDate);
     } else {
-      return events.filter(event => new Date(event.date) >= currentDate);
+      return sortedEvents.filter(event => new Date(event.start_date) >= currentDate);
     }
   };
 
@@ -50,9 +53,9 @@ const Events: React.FC = () => {
           <div className="card-timeline"></div>
           {viewEvents && viewEvents.length > 0 ? (
             viewEvents.map((event, index) =>
-              <>
-                <EventCard {...event} key={event.id}/>
-              </>
+              
+                <EventCard {...event} key={index}/>
+              
             )) :
             <div className="no-event">
               <p>No events found</p>
