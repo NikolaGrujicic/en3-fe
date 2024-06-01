@@ -6,21 +6,29 @@ import "./styles.scss";
 interface SelectImageModalProps {
   modalIsOpen: boolean;
   closeModal: () => void;
-  setFile: any;
+  setFile: (file: any) => void;
+  images?: string[]; // Optional array of image URLs
 }
 
 const SelectImageModal: FC<SelectImageModalProps> = ({
   modalIsOpen,
   closeModal,
   setFile,
+  images,
 }) => {
   function closeModall() {
     closeModal();
   }
 
   const handleChange = (e: any) => {
-    console.log(e.target.file.value);
-    setFile(URL.createObjectURL(e.target.files[0]));
+    if (e.target.files[0]) {
+      setFile(URL.createObjectURL(e.target.files[0]));
+    }
+  };
+
+  const selectImage = (image: string) => {
+    setFile(image);
+    closeModall();
   };
 
   return (
@@ -31,7 +39,7 @@ const SelectImageModal: FC<SelectImageModalProps> = ({
       ariaHideApp={false}
       style={{
         overlay: {
-          backgroundColor: "rgba(119, 119, 119, 0.05)",
+          backgroundColor: "rgba(119, 119, 119, 0.5)",
         },
         content: {
           position: "fixed",
@@ -47,26 +55,43 @@ const SelectImageModal: FC<SelectImageModalProps> = ({
           textAlign: "left",
           verticalAlign: "middle",
           display: "flex",
+          flexDirection: "column",
           height: "fit-content",
         },
       }}
     >
-      <div className="modal-container">
-        <form className="form-container">
-          <label htmlFor="fileId" className="label-container label-main">
-            <h2 className="label-text-color">Upload File</h2>
-            <FiUploadCloud className="upload-icon" />
-            <p className="label-select">Must not be more than 100kb</p>
-          </label>
-          <input
-            className="select-input"
-            name="file"
-            type="file"
-            onChange={handleChange}
-            id="fileId"
-          />
-        </form>
-      </div>
+      {images ? (
+        <div className="image-selection-container">
+          {images.map((item, index) => (
+            <div className="image-with-label" key={index}>
+              <img
+                src={item.src}
+                alt={`Select art ${item.label}`}
+                style={{ width: '100%' }} // Adjust width within the container
+                onClick={() => selectImage(item.src)}
+              />
+              <span>{item.label}</span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="modal-container">
+          <form className="form-container">
+            <label htmlFor="fileId" className="label-container label-main">
+              <h2 className="label-text-color">Upload File</h2>
+              <FiUploadCloud className="upload-icon" />
+              <p className="label-select">Must not be more than 100kb</p>
+            </label>
+            <input
+              className="select-input"
+              name="file"
+              type="file"
+              onChange={handleChange}
+              id="fileId"
+            />
+          </form>
+        </div>
+      )}
     </ReactModal>
   );
 };
