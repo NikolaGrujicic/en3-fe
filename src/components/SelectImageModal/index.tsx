@@ -66,10 +66,6 @@ const SelectImageModal: FC<SelectImageModalProps> = ({
             id="fileId"
           />
         </form>
-        <br />
-        or
-        <br />
-        <button className="select-button">Generate with AI</button>
       </div>
     </ReactModal>
   );
