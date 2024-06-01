@@ -4,51 +4,52 @@ import { eventsData } from "../../config/const";
 import { Event } from '../../interfaces';
 import './index.scss'
 import { getDayOfWeek, formatDate } from '../../services/dateHelper';
+import { useLocation } from 'react-router-dom';
 
 const SingleEvent: React.FC = () => {
-    let { eventId } = useParams()
+    const navLocation = useLocation();
+    
 
-    //mimic api call or getter from state to find the event based on eventId
-
-    const getEventById = (eventId: string | undefined) => {
-        return eventsData.find(event => event.id === eventId)
-    }
-    const [event, setEvent] = useState<Event | null>(null);
+    const {
+        start_date,
+        name,
+        description,
+        id,
+        image,
+        capacity,
+        location:eventLocation} = navLocation.state;
+    
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     const [eventDay , setEventDay] = useState('');
     const [eventMonth , setEventMonth] = useState('');
-
     useEffect(() => {
-        const event = getEventById(eventId);
-        setEvent(event ?? null);
-        if (event) {
-            const [month, day] = formatDate(event.date).split(' ');
-            setEventDay(day);
-            setEventMonth(month);
-        }
-    }, [])
-
-    return ({ event }) ? (
+        const [month, day] = formatDate(start_date).split(' ');
+    setEventDay(day);
+    setEventMonth(month);
+      
+    },[])
+    return (
         <div className="single-event-wrapper">
             <div className="single-event">
                 <div className="column-left">
                     <div className="image section-margin-bottom">
-                        <img src={`https://picsum.photos/330/330?random=${Math.floor(Math.random() * 20) + 1}`} alt="" />
+                        <img src={apiUrl + '/images/' + image} alt="" />
                     </div>
                     <div className="hosted-by section-margin-bottom">
                         <span className="title">Hosted by</span>
                         <div className="white-underline"></div>
-                        {
+                        {/* {
                             event?.speakers.map(speaker => (
                                 <div className="hosted-by-row">
                                     <img src={`https://picsum.photos/330/330?random=${Math.floor(Math.random() * 20) + 1}`} alt="" />
                                     <span>{speaker}</span>
                                 </div>
                             ))
-                        }
+                        } */}
                     </div>
                     <div className="going section-margin-bottom">
-                        <span className="title">{event?.attendeeCount} Going</span>
+                        <span className="title">{capacity} Going</span>
                         <div className="white-underline"></div>
                         <span className="attendees-list">Carlo Nicolosi, Bruno BEN SAID and 28 others</span>
                     </div>
@@ -64,7 +65,7 @@ const SingleEvent: React.FC = () => {
                     </div>
                     <div className="main-info section-margin-bottom">
                         <h2 className="title section-margin-bottom">
-                            {event?.title}
+                            {name}
                         </h2>
                         <div className="time-box section-margin-bottom">
                             <div className="icon-calendar">
@@ -73,9 +74,9 @@ const SingleEvent: React.FC = () => {
                             </div>
                             <div className="text">
                                 <div className="title">
-                                    {event?.date &&
-                                    `${getDayOfWeek(event?.date)}, ${formatDate(event?.date)}`
-                                    }
+                                  
+                                    {getDayOfWeek(start_date)}, {formatDate(start_date)}
+                                    
                                 </div>
                                 <div className="desc">6:00 PM - 8:30 PM GMT+2</div>
                             </div>
@@ -86,9 +87,9 @@ const SingleEvent: React.FC = () => {
                             </div>
                             <div className="text">
                                 <div className="title">
-                                    Via Privata Turro, 6
+                                   {eventLocation}
                                 </div>
-                                <div className="desc">{event?.location}</div>
+                                <div className="desc">{eventLocation}</div>
                             </div>
                         </div>
                     </div>
@@ -98,16 +99,16 @@ const SingleEvent: React.FC = () => {
                     <div className="description section-margin-bottom">
                         <span>About</span>
                         <div className="white-underline section-margin-bottom"></div>
-                        <p><strong>{event?.title}</strong></p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione distinctio nemo aspernatur expedita, natus delectus. Et maiores quod hic rem tenetur adipisci. Distinctio officia error aliquam optio libero pariatur perspiciatis.</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione distinctio nemo aspernatur expedita, natus delectus. Et maiores quod hic rem tenetur adipisci. Distinctio officia error aliquam optio libero pariatur perspiciatis.</p>
+                        <p><strong>{name}</strong></p>
+                        <p>{description}</p>
+                        
 
                     </div>
                     <div className="location section-margin-bottom">
                         <span>Location</span>
                         <div className="white-underline section-margin-bottom"></div>
-                        <p><strong>Via Privata Turro, 6</strong></p>
-                        <p>20127 Milano MI, Italy <br/>@ Teiacare</p>
+                        {/* <p><strong>Via Privata Turro, 6</strong></p> */}
+                        <p>{eventLocation} <br/></p>
                         <div className="map">
 
                         </div>
@@ -116,11 +117,7 @@ const SingleEvent: React.FC = () => {
                 </div>
             </div>
         </div>
-    ) : (
-        <div>
-            <h1>No event found</h1>
-        </div>
-    )
+    ) 
 };
 
 export default SingleEvent;

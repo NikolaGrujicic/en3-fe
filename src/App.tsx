@@ -4,8 +4,8 @@ import CreateEvent from "./pages/CreateEvent/index";
 import Events from "./pages/Events/index";
 import Header from "./components/Header";
 import SingleEvent from "./pages/SingleEvent";
+import Home from "./pages/Home";
 import { useEffect } from "react";
-
 function App() {
   useEffect(() => {
     if (window.ethereum && window) {
@@ -27,7 +27,7 @@ function App() {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={"wkjnfwenfjwei"} />
+        <Route path="/" element={<Home/>}/>
         <Route path="/about" element={"wojnwmedc"} />
         <Route path="/create-event" element={<CreateEvent />} />
         <Route path="/events" element={<Events />} />
