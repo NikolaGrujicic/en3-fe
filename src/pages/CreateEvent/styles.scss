@@ -1,8 +1,17 @@
 .create-event-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
+  width: 100%;
+  padding: 40px;
+}
+
+.step-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   padding: 40px;
 }
@@ -10,11 +19,10 @@
 .image-section {
   padding-top: 40px;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  flex-basis: 50%;
+  gap: 30px;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .input-description-style {
@@ -30,7 +38,8 @@
 }
 
 .input-text-style {
-  width: 70%;
+  width: 100%;
+  max-width: 300px;
   border: none;
   color: #ffff;
   padding: 20px 20px 20px 20px;
@@ -43,6 +52,8 @@
 
 .input-date-style {
   height: 60px;
+  width: 100%;
+  max-width: 170px;
   border: none;
   padding: 10px 10px 10px 10px;
   color: #ffff;
@@ -71,11 +82,10 @@
 
 .create-event-section {
   display: flex;
-  flex-direction: column;
-  flex-basis: 50%;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: flex-start;
-  gap: 10px;
+  width: 70%;
+  gap: 20px;
 }
 
 .label {
@@ -97,9 +107,83 @@
   background-color: #ffff;
   border-radius: 10px;
   color: black;
-  padding: 15px;
+  padding: 10px;
   width: 50%;
   &:hover {
     background-color: #ffffffc2;
   }
+}
+
+.next-page-button {
+  background-color: #ffff;
+  border-radius: 10px;
+  color: black;
+  padding: 10px;
+  width: 50%;
+  &:hover {
+    background-color: #ffffffc2;
+  }
+}
+
+.charity-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.charity-percentage {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  color: white;
+}
+
+.binance-charity-img {
+  border-radius: 10px;
+}
+
+.left-side-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  padding-left: 70px;
+}
+
+.right-side-container {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+  padding-left: 70px;
+}
+
+.steps-container {
+  max-width: 800px;
+  width: 100%;
+}
+
+.generate-image-step-buttons {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 50px;
+}
+
+.generate-image-butons {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-basis: 50%;
+  gap: 10px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.image-container {
+  flex-basis: 50%;
+  flex-basis: 50%;
+  display: flex;
+  justify-content: flex-end;
 }
