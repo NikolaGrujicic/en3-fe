@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { ethers } from "ethers";
-import axios from "axios";
+import React, { useState } from 'react';
+import { ethers } from 'ethers';
+import axios from 'axios';
+import { abi } from '../consts/sc-abi';
+import { bytecode } from '../consts/bytecode';
 const Login = () => {
   const [account, setAccount] = useState(null);
-  const [message, setMessage] = useState("Sign this message to log in.");
+  const [message, setMessage] = useState('Sign this message to log in.');
+  const [contractAddress, setContractAddress] = useState('');
+  const [deploying, setDeploying] = useState(false);
+
   const [signature, setSignature] = useState(null);
   const [messageSigned, setMessageSigned] = useState<boolean>(false);
 
@@ -62,11 +67,62 @@ const Login = () => {
   };
   console.log(sessionToken);
 
-  useEffect(() => {
-    if (sessionToken) {
-      setMessageSigned(true);
+
+  const deployContract = async () => {
+    try {
+      setDeploying(true);
+
+      // Connect to MetaMask
+      if (!window.ethereum) throw new Error('MetaMask not installed');
+      await window.ethereum.enable();
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+
+      // Create contract instance
+      const factory = new ethers.ContractFactory(abi, bytecode, signer);
+      const contract = await factory.deploy();
+      // Wait for contract to be deployed
+      const status = await contract.waitForDeployment();
+      console.log('contract addresss', contract.target);
+      setContractAddress(contract.target);
+      setTimeout(async () => {
+        const contractInstance = new ethers.Contract(contract.target, abi, signer);
+        const cost = ethers.parseUnits('0.01', 'ether');
+        const result = await contractInstance.createNFTCollection("ayy lmao", "LMAO", "ipfs://QmPPWbX4H9xUcJWnNzKpV1Br5F4DLuv1bDmTQNZy2X5bUE/", 5, cost, "0x142f9DE19A405a1E8B6b71811414110b33998b88", 50);
+        console.log('result', result);
+        
+        // POST  /create-event
+        // Needs header: authentication: JWT 
+        /*{
+          description, 
+          contractAddr
+          name, 
+          startDate, 
+          endDate, 
+          location, 
+          capacity,
+          price,
+          donationAddr,
+          donatationPercentage,
+          image
+        }*/
+        
+        
+        /*setTimeout(async () => {
+          const result = await contractInstance.mintNFT(ethers.toBigInt(0), {value: ethers.parseEther('0.01')});
+          console.log('attytytttsadtytydastytydstysdaty', result);
+          
+        }, 10000);*/
+      }, 20000)
+
+    } catch (error) {
+      console.error('Error deploying contract:', error);
+    } finally {
+      setDeploying(false);
     }
-  }, [localStorage]);
+  };
+
+
   return (
     <div>
       <button onClick={connectWallet}>Connect MetaMask</button>
