@@ -2,10 +2,10 @@
 
 import React from 'react';
 import './style.scss';
-import { getDayOfWeek,formatDate } from '../../services/dateHelper';
-import { useNavigate } from 'react-router-dom';
+import { getDayOfWeek, formatDate } from '../../services/dateHelper';
 
 interface EventCardProps {
+    id: string;
     title: string;
     time: string;
     speakers: string[];
@@ -13,7 +13,6 @@ interface EventCardProps {
     attendeeCount: number;
     date: string;
     image: string;
-    eventId:number
 }
 
 const EventCard: React.FC<EventCardProps> = (EventCardProps) => {
@@ -24,7 +23,7 @@ const EventCard: React.FC<EventCardProps> = (EventCardProps) => {
                 <p>{formatDate(EventCardProps.date)}</p>
                 <p>{getDayOfWeek(EventCardProps.date)}</p>
             </div>
-            <div className="card-data" onClick={() =>  window.open('/event/' + EventCardProps.eventId, '_blank')}>
+            <div className="card-data" onClick={() =>  window.open(`/events/${EventCardProps.id}`, '_blank')}>
                 <div className="event-info">
                     <p className="event-time">
                         {EventCardProps.time}
@@ -44,7 +43,7 @@ const EventCard: React.FC<EventCardProps> = (EventCardProps) => {
                     </div>
                 </div>
                 <div className="event-image">
-                    <img src={`https://picsum.photos/200/300?random=${EventCardProps.eventId + 1}`} alt="" />
+                    <img src={`https://picsum.photos/200/300?random=${ Math.floor(Math.random() * 20) + 1 }`} alt="" />
                 </div>
             </div>
         </div>
