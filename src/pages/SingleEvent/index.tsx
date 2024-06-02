@@ -71,7 +71,7 @@ const SingleEvent: React.FC = () => {
           </div>
 
           <div className="hosted-by section-margin-bottom">
-            <span className="title">Price : {price} eur</span>
+            <span className="title">Price : {price} BNB</span>
             <div className="white-underline"></div>
 
             <ReactiveButton
