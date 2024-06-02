@@ -23,6 +23,7 @@ type GenerateImageStepProps = {
 
 const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
   const [showLoader, setShowLoader] = useState<boolean>(false);
+  const [showLoaderB, setShowLoaderB] = useState<boolean>(false);
   const [modalOpen, setIsModalOpen] = useState<boolean>(false);
   const [eventCreatedModalOpen, setEventCreatedModalOpen] =
     useState<boolean>(false);
@@ -92,7 +93,7 @@ const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
   const deployContract = async () => {
     try {
       // setDeploying(true);
-
+      setShowLoaderB(true);
       // Connect to MetaMask
       if (!window.ethereum) throw new Error("MetaMask not installed");
       await window.ethereum.enable();
@@ -139,6 +140,7 @@ const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
         );
         console.log("result", result);
         setEventCreatedModalOpen(true);
+        setShowLoaderB(false);
         // POST  /create-event
         // Needs header: authentication: JWT
         /*{
@@ -163,8 +165,10 @@ const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
         // }, 10000);
       }, 20000);
     } catch (error) {
+      setShowLoaderB(false);
       console.error("Error deploying contract:", error);
     } finally {
+      setShowLoaderB(false);
       // setDeploying(false);
     }
   };
@@ -196,6 +200,7 @@ const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
             )}
           </div>
         </div>
+
         <div className="generate-image-buttons">
           <Button
             variant="outlined"
@@ -222,6 +227,12 @@ const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
             Choose Artist
           </Button>
         </div>
+        {showLoaderB && (
+          <div className="loader-image">
+            <div>Creating new event...</div>
+            <CircularProgress />
+          </div>
+        )}
       </div>
       <div className="generate-image-step-buttons">
         <button className="next-page-button" onClick={() => setCurrentStep(0)}>
@@ -232,7 +243,7 @@ const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
           type="submit"
           onClick={() => deployContract()}
         >
-          Generate event page
+          Create event page
         </button>
       </div>
       <SelectImageModal
