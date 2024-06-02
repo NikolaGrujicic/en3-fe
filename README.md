@@ -4,6 +4,7 @@ Welcome to en3, the cutting-edge NFT Ticketing System built on the Binance Smart
 
 ## Start project
 npm install
+
 npm run dev
 
 # React + TypeScript + Vite
