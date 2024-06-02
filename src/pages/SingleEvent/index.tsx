@@ -1,40 +1,77 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { eventsData } from "../../config/const";
-import { Event } from '../../interfaces';
+import { MouseEvent, useEffect, useState } from "react";
 import './index.scss'
-import { getDayOfWeek, formatDate } from '../../services/dateHelper';
+import { getDayOfWeek, formatDate, getDateDetails } from '../../services/dateHelper';
 import { useLocation } from 'react-router-dom';
+import ReactiveButton from 'reactive-button';
+
+
 
 const SingleEvent: React.FC = () => {
     const navLocation = useLocation();
-    
+    const [btnState, setBtnState] = useState('idle');
 
     const {
         start_date,
+        end_date,
         name,
         description,
         id,
         image,
         capacity,
-        location:eventLocation} = navLocation.state;
-    
+        price,
+        contract_addr,
+        location: eventLocation } = navLocation.state;
+    const onClickHandler = (_event: any) => {
+        setBtnState('loading');
+        //if error setBtnState('error')
+        setTimeout(() => {
+            setBtnState('success');
+        }, 2500);
+
+    }
     const apiUrl = import.meta.env.VITE_API_URL;
 
-    const [eventDay , setEventDay] = useState('');
-    const [eventMonth , setEventMonth] = useState('');
+    const [eventDay, setEventDay] = useState('');
+    const [eventMonth, setEventMonth] = useState('');
+    const [eventTime, setEventTime] = useState('');
     useEffect(() => {
         const [month, day] = formatDate(start_date).split(' ');
-    setEventDay(day);
-    setEventMonth(month);
-      
-    },[])
+        setEventDay(day);
+        setEventMonth(month);
+        const { time: startTime } = getDateDetails(start_date);
+        const { time: endTime, timezone } = getDateDetails(end_date);
+
+        setEventTime(`${startTime} - ${endTime} ${timezone}`);
+
+    }, [])
     return (
         <div className="single-event-wrapper">
             <div className="single-event">
                 <div className="column-left">
                     <div className="image section-margin-bottom">
                         <img src={apiUrl + '/images/' + image} alt="" />
+                    </div>
+
+                    <div className="hosted-by section-margin-bottom">
+                        <span className="title">Price : {price} eur</span>
+                        <div className="white-underline"></div>
+
+                        <ReactiveButton
+                            buttonState={btnState}
+                            idleText={'Buy Ticket'}
+                            loadingText={'Loading'}
+                            size="large"
+                            successText={'Success'}
+                            errorText={'Failed to purchase ticket'}
+                            onClick={onClickHandler}
+                            color="primary"
+                            width={'100%'}
+
+                        />
+                    </div>
+                    <div className="contract-address section-margin-bottom">
+                        <span className="title">Contract address:</span>
+                        <span className="address">{contract_addr}</span>
                     </div>
                     <div className="hosted-by section-margin-bottom">
                         <span className="title">Hosted by</span>
@@ -61,7 +98,6 @@ const SingleEvent: React.FC = () => {
                 </div>
                 <div className="column-right">
                     <div className="featured-in-loaction-cta section-margin-bottom">
-
                     </div>
                     <div className="main-info section-margin-bottom">
                         <h2 className="title section-margin-bottom">
@@ -74,11 +110,11 @@ const SingleEvent: React.FC = () => {
                             </div>
                             <div className="text">
                                 <div className="title">
-                                  
+
                                     {getDayOfWeek(start_date)}, {formatDate(start_date)}
-                                    
+
                                 </div>
-                                <div className="desc">6:00 PM - 8:30 PM GMT+2</div>
+                                <div className="desc">{eventTime}</div>
                             </div>
                         </div>
                         <div className="location-box section-margin-bottom">
@@ -87,13 +123,13 @@ const SingleEvent: React.FC = () => {
                             </div>
                             <div className="text">
                                 <div className="title">
-                                   {eventLocation}
+                                    {eventLocation}
                                 </div>
                                 <div className="desc">{eventLocation}</div>
                             </div>
                         </div>
                     </div>
-                    <div className="attending-infosection-margin-bottom">
+                    <div className="attending-info section-margin-bottom">
 
                     </div>
                     <div className="description section-margin-bottom">
@@ -101,23 +137,21 @@ const SingleEvent: React.FC = () => {
                         <div className="white-underline section-margin-bottom"></div>
                         <p><strong>{name}</strong></p>
                         <p>{description}</p>
-                        
-
                     </div>
                     <div className="location section-margin-bottom">
                         <span>Location</span>
                         <div className="white-underline section-margin-bottom"></div>
                         {/* <p><strong>Via Privata Turro, 6</strong></p> */}
-                        <p>{eventLocation} <br/></p>
+                        <p>{eventLocation} <br /></p>
                         <div className="map">
-
+                            <img src="/images/map-image.png" alt="" />
                         </div>
                     </div>
 
                 </div>
             </div>
         </div>
-    ) 
+    )
 };
 
 export default SingleEvent;

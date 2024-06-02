@@ -7,6 +7,16 @@ export const getDayOfWeek = (dateString: string): string => {
 
 export const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
-    const options: Intl.DateTimeFormatOptions = { month: 'short', day: 'numeric' };
+    const options: Intl.DateTimeFormatOptions = { month: 'long', day: 'numeric' };
     return date.toLocaleDateString('en-US', options);
 };
+
+
+export const getDateDetails = (dateString:string) => {
+    const dateObj = new Date(dateString);
+    
+    const time = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    const timezone = dateObj.toLocaleTimeString([], { timeZoneName: 'short' }).split(' ')[2];
+    
+    return { time, timezone };
+  };
