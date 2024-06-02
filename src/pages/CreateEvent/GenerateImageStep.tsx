@@ -1,9 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import SelectImageModal from "../../components/SelectImageModal";
 import "./styles.scss";
 import { Button } from "@mui/material";
 import { generateImageAi } from "../../services/BackendService";
 import { useEventStore } from "../../store";
+
+// Import images directly
+import artFrankdegods from './art_frankdegods.jpg';
+import artFrontera from './art_frontera.jpg';
+import artYugalabs from './art_yugalabs.jpg';
 
 type GenerateImageStepProps = {
   setCurrentStep: any;
@@ -13,6 +18,12 @@ const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
   const [modalOpen, setIsModalOpen] = useState<boolean>(false);
   const [file, setFile] = useState<any>();
   const [imageUrlAi, setImageUrlAi] = useState("");
+  const [artistModalImages, setArtistModalImages] = useState<{ src: string; label: string }[]>([
+    { src: artFrankdegods, label: "Frank DeGods" },
+    { src: artFrontera, label: "Frontera" },
+    { src: artYugalabs, label: "Yuga Labs" }
+  ]); // Initialized with imported images and labels
+
   const eventName = useEventStore((state: any) => state.eventName);
   const location = useEventStore((state: any) => state.location);
   const eventDateStart = useEventStore((state: any) => state.eventDateStart);
@@ -51,6 +62,10 @@ const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
     setIsModalOpen(false);
   };
 
+  const openArtistModal = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <div className="create-event-container">
       <div className="image-section">
@@ -66,7 +81,7 @@ const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
             alt="image"
           />
         </div>
-        <div className="generate-image-butons">
+        <div className="generate-image-buttons">
           <Button
             variant="outlined"
             size="large"
@@ -83,7 +98,11 @@ const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
           >
             Generate NFT with AI
           </Button>
-          <Button variant="outlined" size="large" className="select-nft-button">
+          <Button 
+            variant="outlined" 
+            size="large" 
+            className="select-nft-button"
+            onClick={openArtistModal}>
             Choose Artist
           </Button>
         </div>
@@ -100,6 +119,7 @@ const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
         closeModal={closeModal}
         modalIsOpen={modalOpen}
         setFile={setFile}
+        images={artistModalImages} // Pass artist images to the modal
       />
     </div>
   );

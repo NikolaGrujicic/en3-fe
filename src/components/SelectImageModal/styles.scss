@@ -57,3 +57,61 @@
 .select-input {
   display: none;
 }
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.image-grid {
+  display: flex;
+  justify-content: space-between;
+
+  img {
+    width: 30%;
+    margin-right: 5px;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.image-selection-container {
+  display: flex;
+  justify-content: space-around; // Adjust spacing to your preference
+  align-items: center;
+
+  .image-with-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33%; // Adjust based on the number of images or available space
+
+    img {
+      margin-bottom: 8px; // Space between the image and the label
+    }
+
+    span {
+      font-size: 14px;
+      color: #333;
+      text-align: center;
+    }
+  }
+}
