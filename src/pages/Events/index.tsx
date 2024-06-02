@@ -3,7 +3,7 @@ import EventCard from '../../components/EventCard/index';
 import './style.scss';
 import { eventsData } from '../../config/const';
 import { Event } from '../../interfaces';
-
+import { getMyEvents } from '../../services/Events';
 
 const Events: React.FC =  () => {
 
@@ -13,6 +13,9 @@ const [eventTimePeriod, serEventTimePeriod] = React.useState('future');
     setViewEvents(filterEvents(eventTimePeriod));
   }, [eventTimePeriod])
 
+  useEffect(() => {
+    console.log(getMyEvents());
+  },[])
   const [events, setEvents] = useState<Event[]>(eventsData);
   const [viewEvents, setViewEvents] = useState<Event[] | null>(null);
   const filterEvents = (eventType: string): Event[] => {
