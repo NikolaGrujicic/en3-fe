@@ -1,3 +1,12 @@
+# en3: NFT Ticketing System on Binance Smart Chain
+## Introduction
+Welcome to en3, the cutting-edge NFT Ticketing System built on the Binance Smart Chain. This platform revolutionizes event ticketing by combining blockchain technology, AI-generated NFTs, and secure cryptocurrency payments. With en3, every ticket is not only an entry pass but also a unique, collectible piece of digital art.
+
+## Start project
+npm install
+
+npm run dev
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

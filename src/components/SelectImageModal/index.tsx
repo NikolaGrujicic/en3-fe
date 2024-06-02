@@ -7,7 +7,7 @@ interface SelectImageModalProps {
   modalIsOpen: boolean;
   closeModal: () => void;
   setFile: (file: any) => void;
-  images?: string[]; // Optional array of image URLs
+  images?: any; // Optional array of image URLs
 }
 
 const SelectImageModal: FC<SelectImageModalProps> = ({
@@ -67,7 +67,7 @@ const SelectImageModal: FC<SelectImageModalProps> = ({
               <img
                 src={item.src}
                 alt={`Select art ${item.label}`}
-                style={{ width: '100%' }} // Adjust width within the container
+                style={{ width: "100%" }} // Adjust width within the container
                 onClick={() => selectImage(item.src)}
               />
               <span>{item.label}</span>
