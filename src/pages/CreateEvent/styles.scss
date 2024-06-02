@@ -186,13 +186,11 @@
   display: flex;
   justify-content: flex-end;
   position: relative;
-  z-index: 1;
 }
 
 .image-inner-container {
   position: relative;
   background-color: #c0c0c029;
-  z-index: 999;
 }
 
 .loader-image {
