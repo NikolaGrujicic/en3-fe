@@ -16,6 +16,7 @@ const EventStep = ({ setCurrentStep }: EventStepProps) => {
   const [charrityAddress, setCharityAddress] = useState<string>("");
   const [file, setFile] = useState<any>();
 
+  const eventDateEnd = useEventStore((state: any) => state.eventDateEnd);
   const eventName = useEventStore((state: any) => state.eventName);
   const location = useEventStore((state: any) => state.location);
   const description = useEventStore((state: any) => state.description);
@@ -49,6 +50,8 @@ const EventStep = ({ setCurrentStep }: EventStepProps) => {
   );
 
   const binanceCharityAddress = "0x8B99F3660622e21f2910ECCA7fBe51d654a1517D";
+
+  console.log(eventDateEnd);
 
   const handleChange = (e: any) => {
     switch (e.target.name) {
