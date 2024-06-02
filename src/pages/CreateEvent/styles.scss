@@ -19,6 +19,7 @@
 .image-section {
   padding-top: 40px;
   display: flex;
+  flex-direction: column;
   gap: 30px;
   justify-content: center;
   align-items: center;
@@ -182,8 +183,31 @@
 }
 
 .image-container {
-  flex-basis: 50%;
-  flex-basis: 50%;
   display: flex;
   justify-content: flex-end;
+  position: relative;
+  z-index: 1;
+}
+
+.image-inner-container {
+  position: relative;
+  background-color: #c0c0c029;
+  z-index: 999;
+}
+
+.loader-image {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.generate-image-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 600px;
+  align-items: center;
 }

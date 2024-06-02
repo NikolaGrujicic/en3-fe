@@ -9,6 +9,8 @@ import { ethers } from "ethers";
 import { abi } from "../../consts/sc-abi";
 import { bytecode } from "../../consts/bytecode";
 import EventCreatedModal from "../../components/EventCreatedModal";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
 // Import images directly
 import artFrankdegods from "./art_frankdegods.jpg";
@@ -20,6 +22,7 @@ type GenerateImageStepProps = {
 };
 
 const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
+  const [showLoader, setShowLoader] = useState<boolean>(false);
   const [modalOpen, setIsModalOpen] = useState<boolean>(false);
   const [eventCreatedModalOpen, setEventCreatedModalOpen] =
     useState<boolean>(false);
@@ -50,20 +53,27 @@ const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
   );
 
   const callGenerateImageAi = async () => {
-    const res = await generateImageAi({
-      eventName,
-      eventDateStart,
-      eventDateEnd,
-      location,
-      description,
-      capacity,
-      pricePerNftTicket,
-      charityPercentage,
-      charityWalletAddress,
-    });
+    try {
+      setShowLoader(true);
+      const res = await generateImageAi({
+        eventName,
+        eventDateStart,
+        eventDateEnd,
+        location,
+        description,
+        capacity,
+        pricePerNftTicket,
+        charityPercentage,
+        charityWalletAddress,
+      });
 
-    if (res?.status === 200) {
-      setImageUrlAi(res.data);
+      if (res?.status === 200) {
+        setImageUrlAi(res.data);
+      }
+    } catch {
+      setShowLoader(false);
+    } finally {
+      setShowLoader(false);
     }
   };
 
@@ -167,16 +177,24 @@ const GenerateImageStep = ({ setCurrentStep }: GenerateImageStepProps) => {
     <div className="create-event-container">
       <div className="image-section">
         <div className="image-container">
-          <img
-            src={
-              imageUrlAi !== ""
-                ? `${import.meta.env.VITE_API_URL}/images/${imageUrlAi}`
-                : "/img/nft-image.png"
-            }
-            width={280}
-            height={280}
-            alt="image"
-          />
+          <div className="image-inner-container">
+            <img
+              src={
+                imageUrlAi !== ""
+                  ? `${import.meta.env.VITE_API_URL}/images/${imageUrlAi}`
+                  : "/img/nft-image.png"
+              }
+              width={280}
+              height={280}
+              alt="image"
+            />
+            {showLoader && (
+              <div className="loader-image">
+                <div>Generating new image...</div>
+                <CircularProgress />
+              </div>
+            )}
+          </div>
         </div>
         <div className="generate-image-buttons">
           <Button
